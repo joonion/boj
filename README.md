@@ -3,7 +3,8 @@ Solving problems in BOJ
 
 ## Chapter 01.
 
-1110. 더하기 사이클 문제
+1110. 더하기 사이클
+1157. 단어 공부
 
 ## Chapter 02. 
 
