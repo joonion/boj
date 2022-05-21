@@ -3,7 +3,7 @@ def solve(n):
     count = 1
     while (True):
         s = sum(map(int, list(str(m))))
-        m = int(str(m % 10) + str(s % 10))
+        m = (m % 10) * 10 + (s % 10)
         if m == n:
             break
         count += 1
