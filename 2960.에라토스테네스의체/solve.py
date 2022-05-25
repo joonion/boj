@@ -15,12 +15,12 @@ def solve(n, k):
             kth += 1
             if kth == k:
                 return i
-        for j in range(i * i, n + 1, i):
-            if sieve[j] == 1:
-                kth += 1
-                if kth == k:
-                    return j
-            sieve[j] = 0
+            for j in range(i * i, n + 1, i):
+                if sieve[j] == 1:
+                    kth += 1
+                    if kth == k:
+                        return j
+                sieve[j] = 0
     
 N, K = map(int, input().split())
 answer = solve(N, K)
