@@ -1,9 +1,10 @@
 # Solving problems in BOJ
 
-## Chapter 00. 온라인 저지
+## Chapter 00. 온라인 저지 입문
 
-* 문제집
-
+* A + B: 1 2 3 4 5 6 7 8
+* 별찍기: 1 2 3 4 5 6 7 8 9
+* N과 M: 1 2 3 4 5 6 7 8
 
 ## Chapter 01. 몸풀기
 
