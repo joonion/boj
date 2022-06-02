@@ -42,3 +42,4 @@ A = [list(map(int, input().split())) for _ in range(N)]
 solve(N, M, R, A)
 for i in range(N):
     print(" ".join(map(str, A[i])))
+    

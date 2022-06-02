@@ -1,0 +1,2 @@
+#include <bits/stdc++.h>
+using namespace std;int i,j,s,d[4][2]={{1,0},{-1,0},{0,1},{0,-1}},n,m,a[500][500],v[500][500];int f(int y,int x,int t){if(t==4)return 0;if(!(0<=y&&y<n&&0<=x&&x<m)||v[y][x])return -1;v[y][x]=1;int ret=0;for(int i=0;i<4;i++){ret=max(ret,f(y+d[i][0],x+d[i][1],t+1));if(t==1)ret=max(ret,f(y+d[i][0],x+d[i][1],t+2)+f(y-d[i][0],x-d[i][1],t+2));}v[y][x]=0;return ret+a[y][x];}int main(){cin>>n>>m;for(i=0;i<n;i++)for(j=0;j<m;j++)cin>>a[i][j];s=0;for(i=0;i<n;i++)for(j=0;j<m;j++)s=max(s,f(i,j,0));cout<<s;}

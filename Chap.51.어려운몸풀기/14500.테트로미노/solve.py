@@ -11,7 +11,7 @@ best = []
 def dfs(d, w, i, j, mark, A):
     global imove, jmove
     if d == 0:
-        return sum(w) + A[i][j]
+        return w + A[i][j]
     else:
         maxvalue = 0
         for k in range(4):
@@ -20,7 +20,7 @@ def dfs(d, w, i, j, mark, A):
                 continue
             if not mark[ni][nj]:
                 mark[ni][nj] = True
-                maxvalue = max(maxvalue, dfs(d - 1, w + [A[i][j]], ni, nj, mark, A))
+                maxvalue = max(maxvalue, dfs(d - 1, w + A[i][j], ni, nj, mark, A))
                 mark[ni][nj] = False
         return maxvalue
 
@@ -37,13 +37,17 @@ def solve(n, m, A):
     for i in range(n):
         for j in range(m):
             mark = [[False] * m for _ in range(n)]
-            opt = max(opt, dfs(3, [0], i, j, mark, A))
+            mark[i][j] = True
+            opt = max(opt, dfs(3, 0, i, j, mark, A))
     for k in range(len(tshape)):
         T = tshape[k]
         for i in range(n - len(T)):
             for j in range(m - len(T[0])):
                 opt = max(opt, tvalue(i, j, T, A))
     return opt
+
+import sys
+input = sys.stdin.readline
                 
 N, M = map(int, input().split())
 A = [list(map(int, input().split())) for _ in range(N)]
