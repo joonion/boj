@@ -1,0 +1,4 @@
+#include<bits/stdc++.h>
+using namespace std;string D="URDL";int n,m,k,a[]={-1,0,1,0},b[]={0,1,0,-1};vector<string>A;vector<vector<int>>M;
+int dfs(int i,int j,int L,int R){if(i==n-1&&j==m-1)return 1;else{for(int t=0;t<7;t++){int nL=L,nR=R,x=D.find(A[i][j]);if(1<=t&&t<=3){x=(x-t)%4;nL=L-t;}if(4<=t&&t<=6){x=(x+t-3)%4;nR=R-t+3;}int ni=i+a[x],nj=j+b[x];if(0<=ni&&ni<n&&0<=nj&&nj<m&&!M[ni][nj]&&nL>=0&&nR>=0){M[ni][nj]=1;if(dfs(ni,nj,nL,nR))return 1;M[ni][nj]=0;}}return 0;}}
+int main(){cin>>n>>m>>k;A.resize(n);for(int i=0;i<n;i++)cin>>A[i];M.resize(n,vector<int>(m,0));M[0][0]=1;cout<<(dfs(0,0,k,k)?"Yes":"No");}
