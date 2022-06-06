@@ -167,3 +167,24 @@ advanced:
   * 메모리초과: 10,000보다 작거나 같은 수라는 점을 이용
 * 11650 좌표 정렬하기
   * 라이브러리 함수 이용: key와 lambda를 이용한 오름차순/내림차순까지...
+
+## Chapter 51. 어려운 몸풀기
+
+* 16926 배열돌리기
+* 14500 테트로미노
+
+## Chapter 52. 시간 초과와의 전쟁
+
+* 11049 행렬 곱셈 순서 (Python)
+  * sys.stdin.readline, PyPy3
+
+## Chapter 53. 메모리 제한과의 전쟁
+
+* 2096 내려가기
+  * 슬라이딩 윈도우 적용
+
+## Chapter 54. 파이썬 RecursionError
+
+* 5639 이진 탐색 트리
+  * 파이썬에서는 재귀 한도가 있음: https://help.acmicpc.net/judge/rte/RecursionError
+  * 시간 초과, 메모리 초과 등의 문제가 공존

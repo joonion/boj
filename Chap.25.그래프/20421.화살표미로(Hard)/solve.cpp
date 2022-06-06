@@ -1,32 +1,51 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef struct node node_t;
-struct node {
-    int i; int j; int L; int R;
-    node(int a, int b, int c, int d) {i = a; j = b; L = c; R = d;}
-    bool operator < (const node_t other) const {
-        return (L + R) > (other.L + other.R);
-    }
-};
+string D = "URDL";
+int imv[] = {-1, 0, 1, 0};
+int jmv[] = {0, 1, 0, -1};
 
 int n, m, k;
 vector<string> A;
-priority_queue<node_t, vector<node_t>> PQ;
+vector<vector<bool>> M;
 
-bool bfs() {
-    node_t s(0, 0, k, k);
-    PQ.push(s);
+typedef struct node node_t;
+struct node {
+    int i, j, l, r;
+    node(int I, int J, int L, int R) : i(I), j(J), l(L), r(R) {}
+    bool operator < (const node other) const {
+        return (l + r) > (other.l + other.r);
+    }
+};
+priority_queue<node, vector<node>> PQ;
+
+bool move(int t, int i, int j, int L, int R, 
+          int &ni, int &nj, int &nL, int &nR)
+{
+    int x = D.find(A[i][j]); nL = L; nR = R;
+    if (1 <= t && t <= 3) {
+        x = (x - t) % 4; nL = L + t;
+    }
+    if (4 <= t && t <= 6) {
+        x = (x + t - 3) % 4; nR = R + t - 3;
+    }
+    ni = i + imv[x]; nj = j + jmv[x];
+    return (0 <= ni && ni < n && 0 <= nj && nj < m &&
+            !M[ni][nj] && nL <= k && nR <= k);
+}
+
+bool solve() {
+    PQ.push(node(0, 0, 0, 0));
     while (!PQ.empty()) {
         node_t v = PQ.top(); PQ.pop();
-        cout << v.i << v.j << v.L << v.R << endl;
+        M[v.i][v.j] = true; // visited
         for (int t = 0; t < 7; t++) {
-            int i, j, L, R;
-            move(t, v, i, j, L, R);
-            if (i == n - 1 && j == m - 1)
-                return true;
-            if (promising(i, j, L, R)) {
-                PQ.push(u);
+            int ni, nj, nL, nR;
+            if (move(t, v.i, v.j, v.l, v.r, ni, nj, nL, nR)) {
+                if (ni == n - 1 && nj == m - 1)
+                    return true;
+                PQ.push(node(ni, nj, nL, nR));
+                cout << ni << "," << nj << "," << nL << "," << nR << endl;
             }
         }
     }
@@ -39,5 +58,6 @@ int main() {
     A.resize(n);
     for (int i = 0; i < n; i++)
         cin >> A[i];
-    cout << ((bfs()) ? "Yes" : "No");
+    M.resize(n, vector<bool>(m, false));
+    cout << (solve() ? "Yes" : "No");
 }
