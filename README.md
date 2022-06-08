@@ -158,6 +158,10 @@ advanced:
 
 ## Chapter 35. 백트래킹
 
+* 1182 부분수열의 합
+* 9663 N-Queens
+* 12865 평범한 배낭
+
 ## Chapter 41. 정렬 문제
 
 * 2750 수 정렬하기
@@ -171,22 +175,38 @@ advanced:
 * 1181 단어 정렬
 * 10814 나이순 정렬
 
+## Chapter 44. 슬라이딩 윈도우
+
+* 2559 수열 (부분배열의 합)
+* 2096 내려가기
+  * DP로 풀면 메모리 초과
+
 ## Chapter 51. 어려운 몸풀기
 
 * 16926 배열돌리기
 * 14500 테트로미노
 
-## Chapter 52. 시간 초과와의 전쟁
+## Chapter 52. LIS
 
+## Chapter 61. 시간 초과
+
+* 1987 알파벳 (백트래킹)
+  * 전형적인 백트래킹인데 시간초과가 뜸
+* 1717 집합의 표현 (disjoint set)
+  * sys.stdin.readline을 안쓰면 시간초과가 뜸
 * 11049 행렬 곱셈 순서 (Python)
   * sys.stdin.readline, PyPy3
+* 2559 수열
+  * 슬라이딩 윈도우(두 포인터)를 적용하지 않으면 시간 초과
 
-## Chapter 53. 메모리 제한과의 전쟁
+## Chapter 62. 메모리 제한
 
 * 2096 내려가기
   * 슬라이딩 윈도우 적용
 
-## Chapter 54. 파이썬 RecursionError
+## Chapter 63. 왜맞틀
+
+## Chapter 64. 파이썬 RecursionError
 
 * 5639 이진 탐색 트리
   * 파이썬에서는 재귀 한도가 있음: https://help.acmicpc.net/judge/rte/RecursionError
