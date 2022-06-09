@@ -129,6 +129,8 @@ advanced:
 * 20419 20420 20421 화살표 미로
   * DFS와 Dijsktra의 변형: 좌우로 나뉜 카드의 활용
 
+## Chapter 26. 우선순위 큐
+
 ## Chapter 31. 선택 문제
 
 ## Chapter 32. 분할정복
