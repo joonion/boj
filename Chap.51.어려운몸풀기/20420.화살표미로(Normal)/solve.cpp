@@ -1,54 +1,53 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const string D = "URDL";
-const int imv[] = {-1, 0, 1, 0};
-const int jmv[] = {0, 1, 0, -1};
+map<char, int> H = {{'U', 0}, {'R', 1}, {'D', 2}, {'L', 3}};
+
+int di[] = {-1, 0, 1, 0};
+int dj[] = {0, 1, 0, -1};
 
 int n, m, k;
-vector<string> A;
-vector<vector<bool>> M;
+int A[50][50];
 
-typedef struct edge edge_t;
-struct edge {
+struct node {
     int i, j, l, r;
-    edge(int I, int J, int L, int R) : i(I), j(J), l(L), r(R) {}
-    bool operator < (const edge_t &o) const {
-        return (l + r) > (o.l + o.r);
+    bool operator < (const node &o) const {
+        if (i + j == o.i + o.j)
+            return abs(i - j) > abs(o.i - o.j);
+        return i + j < o.i + o.j;
     }
 };
+priority_queue<node> PQ;
+bool mark[2500][151][151];
 
-priority_queue<edge_t, vector<edge_t>, less<edge_t>> PQ;
-
-bool move(int t, int i, int j, int l, int r, int &ni, int &nj, int &nl, int &nr) {
-    nl = l; nr = r;
-    int x = D.find(A[i][j]);
+bool move(int t, node &u, node &v) {
+    int x = A[u.i][u.j]; v.l = u.l; v.r = u.r;
     if (1 <= t && t <= 3) {
-        x = (x >= t) ? x - t : x - t + 4;
-        nl += t;
+        x = (x - t + 4) % 4; v.l += t;
     }
     if (4 <= t && t <= 6) {
-        x = (x + t - 3) % 4;
-        nr += t - 3;
+        x = (x + t - 3) % 4; v.r += t - 3;
     }
-    ni = i + imv[x]; nj = j + jmv[x];
-    return (0 <= ni && ni < n && 0 <= nj && nj < m && !M[ni][nj] && nl <= k && nr <= k);
+    v.i = u.i + di[x]; v.j = u.j + dj[x];
+    return 0 <= v.i && v.i < n && 0 <= v.j && v.j < m && v.l <= k && v.r <= k;
 }
 
 bool bfs() {
-    M.resize(n, vector<bool>(m, false));
-    PQ.push(edge(0, 0, 0, 0));
+    PQ.push({0, 0, 0, 0});
+    mark[0][0][0] = true;
     while (!PQ.empty()) {
-        edge_t v = PQ.top(); PQ.pop();
+        node u = PQ.top(); PQ.pop();
+        // cout << "pop " << u.i << u.j << u.l << u.r << endl;
         for (int t = 0; t < 7; t++) {
-            int ni, nj, nl, nr;
-            if (move(t, v.i, v.j, v.l, v.r, ni, nj, nl, nr)) {
-                if (ni == n - 1 && nj == n - 1)
+            node v;
+            if (move(t, u, v) && !mark[v.i * m + v.j][v.l][v.r]) {
+                if (v.i == n - 1 && v.j == m - 1)
                     return true;
-                PQ.push(edge(ni, nj, nl, nr));
+                // cout << "  push " << v.i << v.j << v.l << v.r << endl;
+                PQ.push(v);
+                mark[v.i * m + v.j][v.l][v.r] = true;
             }
-        } 
-        M[v.i][v.j] = true;
+        }
     }
     return false;
 }
@@ -56,8 +55,11 @@ bool bfs() {
 int main() {
     ios::sync_with_stdio(0); cin.tie(0);
     cin >> n >> m >> k;
-    A.resize(n);
-    for (int i = 0; i < n; i++)
-        cin >> A[i];
+    string s;
+    for (int i = 0; i < n; i++) {
+        cin >> s;
+        for (int j = 0; j < m; j++)
+            A[i][j] = H[s[j]];
+    }
     cout << (bfs() ? "Yes" : "No");
 }
