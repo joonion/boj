@@ -1,0 +1,1 @@
+print(''.join(open(0))[::2].count('F'))
