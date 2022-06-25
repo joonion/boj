@@ -1,29 +1,30 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-map<char, int> H = {{'U', 0}, {'R', 1}, {'D', 2}, {'L', 3}};
-
+string DIR = "URDL";
 int di[] = {-1, 0, 1, 0};
 int dj[] = {0, 1, 0, -1};
 
-int n, m, k;
-int A[150][150];
-vector<pair<int, int>> card;
+int n, m, k, maze[150][150], dist[150][150][1501];
 
 struct node {
     int i, j, l, r;
-    bool operator < (const node &o) const {
-        if (i + j == o.i + o.j)
-            return abs(i - j) > abs(o.i - o.j);
-        return i + j < o.i + o.j;
+};
+
+struct cmp {
+    inline bool operator() (const node &a, const node &b) const {
+        if (a.i + a.j == b.i + b.j)
+            return abs(a.i - a.j) > abs(b.i - b.j);
+        else
+            return a.i + a.j < b.i + b.j;
     }
 };
-priority_queue<node> PQ;
 
-int cnt = 0;
+priority_queue<node, vector<node>, cmp> PQ;
 
 bool move(int t, node &u, node &v) {
-    int x = A[u.i][u.j]; v.l = u.l; v.r = u.r;
+    int x = maze[u.i][u.j];
+    v.l = u.l; v.r = u.r;
     if (1 <= t && t <= 3) {
         x = (x - t + 4) % 4; v.l += t;
     }
@@ -34,26 +35,24 @@ bool move(int t, node &u, node &v) {
     return 0 <= v.i && v.i < n && 0 <= v.j && v.j < m && v.l <= k && v.r <= k;
 }
 
-bool search() {
-    card.resize(n * m, make_pair(1501, 1501));
-    PQ.push({0, 0, 0, 0});
-    card[0] = make_pair(0, 0);
+bool solve() {
+    node u = {0, 0, 0, 0};
+    PQ.push(u);
+    memset(dist, 0x3f3f3f3f, sizeof(dist));
+    dist[u.i][u.j][u.l] = u.r;
     while (!PQ.empty()) {
         node u = PQ.top(); PQ.pop();
-        cout << "pop " << u.i << u.j << u.l << u.r << endl;
+        // cout << "pop " << u.i << u.j << u.l << u.r << endl;
+        if (dist[u.i][u.j][u.l] != u.r)
+            continue;
+        if (u.i == n - 1 && u.j == m - 1)
+            return true;
         for (int t = 0; t < 7; t++) {
             node v;
-            if (move(t, u, v)) {
-                if (v.i == n - 1 && v.j == m - 1)
-                    return true;
-                pair<int, int> &cur = card[v.i * m + v.j];
-                cout << "    cur " << cur.first << cur.second << endl;
-                if (v.l < cur.first || v.r < cur.second) {
-                    cout << "  push " << v.i << v.j << v.l << v.r << endl;
-                    PQ.push(v);
-                    cur.first = v.l; cur.second = v.r;
-                    cnt++;
-                }
+            if (move(t, u, v) && dist[v.i][v.j][v.l] > v.r) {
+                PQ.push(v);
+                dist[v.i][v.j][v.l] = v.r;
+                // cout << "  push " << v.i << v.j << v.l << v.r << endl;
             }
         }
     }
@@ -61,14 +60,12 @@ bool search() {
 }
 
 int main() {
-    ios::sync_with_stdio(0); cin.tie(0);
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
     cin >> n >> m >> k;
-    string s;
     for (int i = 0; i < n; i++) {
-        cin >> s;
+        string s; cin >> s;
         for (int j = 0; j < m; j++)
-            A[i][j] = H[s[j]];
+            maze[i][j] = DIR.find(s[j]);
     }
-    cout << (search() ? "Yes" : "No") << endl;
-    cout << cnt << endl;
+    cout << (solve() ? "Yes" : "No");
 }

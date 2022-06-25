@@ -1,0 +1,1 @@
+a,b=map(int,input().split());print(sum(int(.5+(2*i)**.5)for i in range(a,b+1)))
