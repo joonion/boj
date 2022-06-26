@@ -229,3 +229,9 @@ advanced:
 * 5639 이진 탐색 트리
   * 파이썬에서는 재귀 한도가 있음: https://help.acmicpc.net/judge/rte/RecursionError
   * 시간 초과, 메모리 초과 등의 문제가 공존
+
+## Chapter 99. 비슷한 문제들 모음
+
+* 문자에 숫자 매핑하기
+  * 1339. 단어수학
+  * 1132. 합
