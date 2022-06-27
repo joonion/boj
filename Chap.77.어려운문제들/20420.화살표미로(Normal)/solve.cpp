@@ -8,20 +8,19 @@ int dj[] = {0, 1, 0, -1};
 
 int n, m, k;
 int A[50][50];
+int mark[50][50][151];
 
 struct node {
     int i, j, l, r;
     bool operator < (const node &o) const {
-        if (i + j == o.i + o.j)
-            return abs(i - j) > abs(o.i - o.j);
-        return i + j < o.i + o.j;
+        return r > o.r;
     }
 };
 priority_queue<node> PQ;
-bool mark[2500][151][151];
 
 bool move(int t, node &u, node &v) {
-    int x = A[u.i][u.j]; v.l = u.l; v.r = u.r;
+    int x = A[u.i][u.j];
+    v.l = u.l; v.r = u.r;
     if (1 <= t && t <= 3) {
         x = (x - t + 4) % 4; v.l += t;
     }
@@ -33,19 +32,18 @@ bool move(int t, node &u, node &v) {
 }
 
 bool bfs() {
+    fill(&mark[0][0][0], &mark[49][49][150], 151);
     PQ.push({0, 0, 0, 0});
-    mark[0][0][0] = true;
+    mark[0][0][0] = 0;
     while (!PQ.empty()) {
         node u = PQ.top(); PQ.pop();
-        // cout << "pop " << u.i << u.j << u.l << u.r << endl;
         for (int t = 0; t < 7; t++) {
             node v;
-            if (move(t, u, v) && !mark[v.i * m + v.j][v.l][v.r]) {
+            if (move(t, u, v) && mark[v.i][v.j][v.l] > v.r) {
                 if (v.i == n - 1 && v.j == m - 1)
                     return true;
-                // cout << "  push " << v.i << v.j << v.l << v.r << endl;
-                PQ.push(v);
-                mark[v.i * m + v.j][v.l][v.r] = true;
+                PQ.push({v.i, v.j, v.l, v.r});
+                mark[v.i][v.j][v.l] = v.r;
             }
         }
     }
