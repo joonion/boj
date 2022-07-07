@@ -1,35 +1,35 @@
 import sys
 input = sys.stdin.readline
 
-def build(v, l, r, A, T):
+def build(i, l, r, A, T):
     if l == r:
-        T[v] = A[l]
+        T[i] = A[l]
     else:
         m = (l + r) // 2
-        build(2*v, l, m, A, T)
-        build(2*v+1, m+1, r, A, T)
-        T[v] = T[2*v] * T[2*v+1]
-    
-def update(v, l, r, pos, val, T):
+        build(2*i, l, m, A, T)
+        build(2*i+1, m+1, r, A, T)
+        T[i] = T[2*i] * T[2*i+1] % 1000000007
+
+def update(i, l, r, pos, val, T):
     if l == r:
-        T[v] = val
+        T[i] = val
     else:
         m = (l + r) // 2
         if pos <= m:
-            update(2*v, l, m, pos, val, T)
+            update(2*i, l, m, pos, val, T)
         else:
-            update(2*v+1, m+1, r, pos, val, T)
-        T[v] = T[2*v] * T[2*v+1]
-    
-def query(v, l, r, L, R, T):
-    if L > R:
+            update(2*i+1, m+1, r, pos, val, T)
+        T[i] = T[2*i] * T[2*i+1] % 1000000007
+
+def query(i, l, r, L, R, T):
+    if R < l or r < L:
         return 1
-    elif l == L and r == R:
-        return T[v]
+    elif L <= l and r <= R:
+        return T[i]
     else:
         m = (l + r) // 2
-        return query(2*v, l, m, L, min(R, m), T) * \
-               query(2*v+1, m+1, r, max(L, m+1), R, T)
+        return query(2*i,   l,   m, L, R, T) * \
+               query(2*i+1, m+1, r, L, R, T)  % 1000000007
 
 n, m, k = map(int, input().split())
 A = [0] + [int(input()) for _ in range(n)]

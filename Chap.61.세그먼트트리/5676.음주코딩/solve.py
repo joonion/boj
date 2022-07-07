@@ -1,43 +1,40 @@
 import sys
 input = sys.stdin.readline
-print = sys.stdout.write
 
-def build(v, l, r, A, T):
+def build(i, l, r, A, T):
     if l == r:
-        T[v] = A[l]
+        T[i] = 1 if A[l] > 0 else -1 if A[l] < 0 else 0
     else:
         m = (l + r) // 2
-        build(2*v, l, m, A, T)
-        build(2*v+1, m+1, r, A, T)
-        T[v] = T[2*v] * T[2*v+1]
+        build(2*i, l, m, A, T)
+        build(2*i+1, m+1, r, A, T)
+        T[i] = T[2*i] * T[2*i+1]
 
-def update(v, l, r, pos, val, T):
+def update(i, l, r, pos, val, T):
     if l == r:
-        T[v] = val
+        T[i] = 1 if val > 0 else -1 if val < 0 else 0
     else:
         m = (l + r) // 2
         if pos <= m:
-            update(2*v, l, m, pos, val, T)
+            update(2*i, l, m, pos, val, T)
         else:
-            update(2*v+1, m+1, r, pos, val, T)
-        T[v] = T[2*v] * T[2*v+1]
+            update(2*i+1, m+1, r, pos, val, T)
+        T[i] = T[2*i] * T[2*i+1]
 
-def query(v, l, r, L, R, T):
-    if L > R:
+def query(i, l, r, L, R, T):
+    if R < l or r < L:
         return 1
-    elif l == L and r == R:
-        return T[v]
+    elif L <= l and r <= R:
+        return T[i]
     else:
         m = (l + r) // 2
-        return query(2*v, l, m, L, min(R, m), T) * \
-               query(2*v+1, m+1, r, max(L, m+1), R, T)
+        return query(2*i,   l,   m, L, R, T) * \
+               query(2*i+1, m+1, r, L, R, T)
 
 while True:
     try:
         n, m = map(int, input().split())
         A = [0] + list(map(int, input().split()))
-        for i in range(len(A)):
-            A[i] = 1 if A[i] > 0 else -1 if A[i] < 0 else 0
         T = [0] + [0] * (4 * n)
         build(1, 1, n, A, T)
         s = ""
@@ -47,7 +44,6 @@ while True:
                 update(1, 1, n, int(a), int(b), T)
             else:
                 r = query(1, 1, n, int(a), int(b), T)
-                s += "0" if r == 0 else "+" if r > 0 else "-"
-        print(s + "\n")
-    except:
-        break
+                s += "+" if r > 0 else "-" if r < 0 else "0"
+        print(s)
+    except: break
