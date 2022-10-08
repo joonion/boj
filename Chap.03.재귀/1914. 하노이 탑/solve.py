@@ -3,7 +3,7 @@ def hanoi(n, src, dst, via):
         print(src, dst)
     else:
         hanoi(n - 1, src, via, dst)
-        print(src, dst)
+        hanoi(1, src, dst, via)
         hanoi(n - 1, via, dst, src)
     
 def solve(n):

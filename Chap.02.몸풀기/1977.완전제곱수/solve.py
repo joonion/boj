@@ -6,7 +6,7 @@ def solve(m, n):
     if len(perfect) == 0:
         return -1, None
     return sum(perfect), perfect[0]
-        
+
 M = int(input())
 N = int(input())
 answer1, answer2 = solve(M, N)
