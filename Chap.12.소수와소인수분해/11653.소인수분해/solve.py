@@ -13,6 +13,6 @@ def solve(n):
     factors = factorize(n)
     for i in range(len(factors)):
         print(factors[i])
-    
+
 N = int(input())
 solve(N)
