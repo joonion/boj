@@ -1,0 +1,12 @@
+#define quadtree_width 8
+#define quadtree_height 8
+static char quadtree_bits[] = {
+0x80,
+0x00,
+0x00,
+0x00,
+0x00,
+0x00,
+0x00,
+0x00,
+};

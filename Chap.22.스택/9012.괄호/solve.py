@@ -9,7 +9,7 @@ def solve(S):
             stack.pop()
     return True if len(stack) == 0 else False
 
-n = int(input())
-for _ in range(n):
+T = int(input())
+for _ in range(T):
     S = input()
     print("YES" if solve(S) else "NO")
