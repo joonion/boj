@@ -10,7 +10,7 @@ def bfs(v, G, mark):
                 mark[u] = True
     
 def solve(n, G):
-    mark = [False] * len(G)
+    mark = [False] * (n + 1)
     bfs(1, G, mark)
     return sum(mark) - 1
 
