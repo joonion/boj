@@ -1,0 +1,1 @@
+main(){int n,p,k,m;scanf("%d%d",&n,&p);for(k=p;n>0&&k<1000000001;k+=p){for(m=2;m<p;m++)if(!(k%m))break;if(m==p)n-=1;}printf("%d",n?0:k-p);}
