@@ -10,13 +10,7 @@ def eratos(n):
 
 def solve(n, sieve):
     cnt = 0
-    for i in range(2, n):
-        if sieve[i] != 1: continue
-        for j in range(i, n):
-            if sieve[j] != 1: continue
-            k = n - i - j
-            if j <= k and sieve[k] == 1 and i + j > k:
-                cnt += 1
+    for i in range()
     return cnt
 
 
