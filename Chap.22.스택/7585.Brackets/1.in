@@ -1,0 +1,4 @@
+void test(int num) { num = double(num); }
+int count(int value) { return (value + 2; }
+while(sum < 200) { sum += data[test(sum]); }
+#
