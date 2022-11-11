@@ -3,7 +3,7 @@ def binsearch(n, F):
     while low <= high:
         mid = (low + high) // 2
         if n == F[mid]:
-            return mid;
+            return mid
         elif n < F[mid]:
             high = mid - 1
         else:

@@ -1,12 +1,8 @@
-def solve(n):
-    cnt = 0
-    for a in range(1, n):
-        for b in range(a, n):
-            c = n - a - b
-            if b > c: break
-            if a + b > c:
-                cnt += 1
-    return cnt
-
-N = int(input())
-print(solve(N))
+n = int(input())
+cnt = 0
+for x in range(1, n):
+    for y in range(x, n):
+        z = n - x - y
+        if y <= z and x + y > z:
+            cnt += 1
+print(cnt)
